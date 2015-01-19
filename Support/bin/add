@@ -1,0 +1,22 @@
+#!/bin/bash
+
+name=${MM_SUBJECT//:/_}
+name=${name//\"/\'}
+
+mkdir "$TMPDIR/com.freron.MailMate.EagleFiler"
+tmpfile="$TMPDIR/com.freron.MailMate.EagleFiler/${name}.eml"
+cat > "${tmpfile}"
+
+url="message://%3c${MM_MESSAGE_ID}%3e"
+
+osascript <<END
+
+tell application "EagleFiler"
+	import files { "${tmpfile}" } source URL "${url}" with deleting afterwards
+	-- asking for options boolean
+end tell
+
+
+END
+
+# unlink "${tmpfile}" # Handled by EagleFiler
