@@ -14,11 +14,17 @@ tmpfile=${tmpfile//\"/\\\"}
 
 osascript <<END
 
-tell application "EagleFiler"
-	import files { "${tmpfile}" } source URL "${url}" with deleting afterwards
-	-- asking for options boolean
-end tell
-
+try
+	tell application "EagleFiler"
+		import files { "${tmpfile}" } source URL "${url}" with deleting afterwards
+		-- asking for options boolean
+	end tell
+on error errMsg number eNum
+	tell application "System Events"
+		activate
+		display alert "EagleFiler: " & eNum message errMsg
+	end tell
+end try
 
 END
 
