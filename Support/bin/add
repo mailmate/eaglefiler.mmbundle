@@ -1,6 +1,8 @@
 #!/bin/bash
 
 name=${MM_SUBJECT//:/_}
+name=${name//\//_}
+name=${name:0:250}
 
 mkdir -p "$TMPDIR/com.freron.MailMate.EagleFiler"
 tmpfile="$TMPDIR/com.freron.MailMate.EagleFiler/${name}.eml"
@@ -8,24 +10,6 @@ cat > "${tmpfile}"
 
 url="message://%3c${MM_MESSAGE_ID}%3e"
 
-# Tricky substitution to make it work for " and \ in the AppleScript below.
-tmpfile=${tmpfile//\\/\\\\}
-tmpfile=${tmpfile//\"/\\\"}
-
-osascript <<END
-
-try
-	tell application "EagleFiler"
-		import files { "${tmpfile}" } source URL "${url}" with deleting afterwards
-		-- asking for options boolean
-	end tell
-on error errMsg number eNum
-	tell application "System Events"
-		activate
-		display alert "EagleFiler: " & eNum message errMsg
-	end tell
-end try
-
-END
+osascript "${MM_BUNDLE_SUPPORT}/bin/EagleFilerImport.scpt" "${tmpfile}" "${url}"
 
 # unlink "${tmpfile}" # Handled by EagleFiler
