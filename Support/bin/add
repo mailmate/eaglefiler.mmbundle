@@ -9,7 +9,8 @@ tmpfile="$TMPDIR/com.freron.MailMate.EagleFiler/${name}.eml"
 cat > "${tmpfile}"
 
 url="message://%3c${MM_MESSAGE_ID}%3e"
+tags="${MM_TAGS}"
 
-osascript "${MM_BUNDLE_SUPPORT}/bin/EagleFilerImport.scpt" "${tmpfile}" "${url}"
+osascript "${MM_BUNDLE_SUPPORT}/bin/EagleFilerImport.scpt" "${tmpfile}" "${url}" "${tags}"
 
 # unlink "${tmpfile}" # Handled by EagleFiler

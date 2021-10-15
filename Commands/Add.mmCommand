@@ -1,7 +1,7 @@
 {
 	name          = 'Add';
 	input         = 'raw';
-	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body:no subject}\nMM_MESSAGE_ID=${message-id.split}\n';
+	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body:no subject}\nMM_MESSAGE_ID=${message-id.split}\nMM_TAGS=${##tags}\n';
 	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/add"';
 	keyEquivalent = "^A";
 	uuid          = 'F2C8D509-4239-4EA0-9D85-AF44025A0982';
